@@ -7,4 +7,5 @@ Sample .gitignore file
 nlpenv/
 .gitignore
 .ipynb_checkpoints/
+raw_data/
 ```
