@@ -12,4 +12,22 @@ nlpenv/
 .gitignore
 .ipynb_checkpoints/
 raw_data/
+balancedtest.csv
+```
+
+Sample Folder Directory (Mine)
+
+```
+>.ipynb_checkpoints
+> nlpenv
+> raw_data
+    - balancedtest.csv
+    - fulltrain.csv
+    - test.xlsx
+    - xdev.txt
+    - xtrain.txt
+- .gitignore
+- balancedtest.csv
+- README.md
+- Team18.ipynb
 ```
