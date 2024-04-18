@@ -23,11 +23,80 @@ Here is the folder structure
   - naive bayes: log probability
   - RNN & LSTM: Gradients
 
+Step 0: Install the necessary packages by running the cell under *Installing necessary libraries*.
+```
+!pip install scikit-learn
+!pip install pandas
+!pip install matplotlib
+!pip install tensorflow
+!pip install shap
+!pip install nltk
+!pip install textstat
+!pip install textblob
+```
+Step 1: Run The following cell under *Constant*.
+```
+import pandas as pd
+# Data consists of text (feature) + classification (y value: 1/2/3/4)
+TEXT_FEATURE_NAME = "text"
+CLASSIFICATION_NAME = "classification"
 
+# CONSTANTS
+classifier_mapping = {
+    1: "Satire",
+    2: "Hoax",
+    3: "Propaganda",
+    4: "Reliable News"
+}
+mapping_df = pd.DataFrame(list(classifier_mapping.items()), columns=['classification', 'label'])
+```
+Step 2: Find this subheader *Reading the Data (No need care about above if we already have normalised data)* under header *Model Training & Evaluation*. Edit the `preprocessed_data/normalised_fulltrain.csv` to match the file path of the training file. As mentioned, the data file is in the google drive link under the folder **DATASET FOR ALL TRAINING MODELS**
 
+```
+import pandas as pd
 
+normalised_df = pd.read_csv('preprocessed_data/normalised_fulltrain.csv')
+X = normalised_df.drop(columns=[CLASSIFICATION_NAME])
+y = normalised_df[CLASSIFICATION_NAME]
+```
 
+Step 3: Run the code under `Setting for train test split` subheader.
 
+## Settings
+```
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
+
+## Note: Change this to fit the algorithm below
+# X are the features
+X = X
+# y are the outputs
+y = y
+# test_size is the size of the test (0 < test_size < 1)
+test_size = 0.2
+# seed for random split
+seed = 40
+## End of Note
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=seed)
+```
+
+Step 4: Run a particular model. In this case, I will be running this cell under `Logistic Regression`. You will see the output of the confusion matrix and the F1 score and accuracy
+```
+from sklearn.linear_model import LogisticRegression
+model = LogisticRegression()
+
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+
+evaluation_metrics = [("Accuracy", accuracy_score), ("Confusion Matrix", confusion_matrix)]
+
+for evaluation_metric_name, evaluation_metric_func in evaluation_metrics:
+    print(f"{evaluation_metric_name}:\n{evaluation_metric_func(y_test, y_pred)}")
+print(f"F1 Macro Score: {f1_score(y_test, y_pred, average='macro')}")
+```
 
 ## For Developers
 
